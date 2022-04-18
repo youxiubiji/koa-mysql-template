@@ -7,7 +7,6 @@ const koaJwt = require('koa-jwt') //路由权限控制
 const koaStatic = require('koa-static')
 const cors = require('koa2-cors'); //跨域处理
 
-const SequelizeConnect = require('./db')
 const { token: tokenConfig } = require('./utils/config')
 
 const { logger, accessLogger } = require('./logger')
@@ -31,10 +30,6 @@ app.use(
         },
     })
 )
-
-// sequelize
-SequelizeConnect()
-
 //访问日志
 app.use(accessLogger())
 
@@ -89,10 +84,10 @@ app.use(bodyParser())
 app.use(parameter(app))
 
 // router
-// const users = require('./routes/user')
-// const upload = require('./routes/upload')
-// app.use(users.routes(), users.allowedMethods())
-// app.use(upload.routes(), upload.allowedMethods())
+const users = require('./routes/user')
+const upload = require('./routes/upload')
+app.use(users.routes(), users.allowedMethods())
+app.use(upload.routes(), upload.allowedMethods())
 
 // 应用日志
 app.on('error', (err, ctx) => {

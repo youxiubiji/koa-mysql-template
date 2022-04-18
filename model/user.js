@@ -1,30 +1,23 @@
-const mongoose = require('mongoose')
+const { DataTypes } = require("sequelize");
+const sequelize = require("../db");
 
-const UserSchema = new mongoose.Schema(
-    {
-        username: {
-            type: String,
-            required: true,
-            unique: true, //唯一值
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        phone: {
-            type: String,
-            default: '',
-        },
-        email: {
-            type: String,
-            default: '',
-        },
-    },
-    { timestamps: { createdAt: 'createTime', updatedAt: 'updateTime' } }
-)
+const User = sequelize.define("User", {
+  // 在这里定义模型属性
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true, // 设置为true时，会为列添加唯一约束
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  phone: {
+    type: DataTypes.STRING,
+  },
+  email: {
+    type: DataTypes.STRING,
+  },
+});
 
-const User = mongoose.model('users', UserSchema)
-
-module.exports = {
-    User,
-}
+module.exports = User;

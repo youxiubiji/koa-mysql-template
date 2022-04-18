@@ -1,12 +1,11 @@
-const Sequelize = require("sequelize");
+const { Sequelize } = require("sequelize");
 const sequelize = new Sequelize("koa", "admin", "123456", {
-  host: "1.117.31.97",
+  host: "localhost",
   dialect: "mysql", // 选择 'mysql' | 'mariadb' | 'postgres' | 'mssql' 其一
   logging: (...msg) => console.log(msg), //记录日志 设为false就不会显示
   dialectOptions: {
     // 字符集
     charset: "utf8mb4",
-    collate: "utf8mb4_unicode_ci",
     supportBigNumbers: true,
     bigNumberStrings: true,
   },
@@ -37,13 +36,11 @@ const sequelize = new Sequelize("koa", "admin", "123456", {
 // 创建模型
 sequelize.sync({ force: false });
 
-// module.exports = { sequelize };
+module.exports = sequelize;
 
-module.exports = async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
-  } catch (error) {
-    console.error("Unable to connect to the database:", error);
-  }
-};
+// try {
+//   await sequelize.authenticate();
+//   console.log("Connection has been established successfully.");
+// } catch (error) {
+//   console.error("Unable to connect to the database:", error);
+// }
